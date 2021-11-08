@@ -1,0 +1,184 @@
+<?xml version='1.0'?>
+<sdf version='1.7'>
+  <model name="nava_mobicar">
+
+    <link name='chassis'>
+      <pose>0 0 .1 0 0 0</pose>
+
+      <inertial>
+        <pose>0.1 0 0  0 0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.21666666666666667</ixx>
+          <iyy>0.8416666666666667</iyy>
+          <izz>1.0416666666666667</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.7 .2 .1</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name='vis1'>
+        <geometry>
+          <box>
+            <size>.7 .2 .1</size>
+          </box>
+        </geometry>
+
+        <material>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+        </material>
+      </visual>
+
+      <visual name="vis2">
+        <pose>0 0 0.1 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>.5 .2 .1</size>
+          </box>
+        </geometry>
+
+        <material>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+        </material>
+      </visual>
+    </link>
+ 
+    <link name="left_front_wheel">
+      <pose>0.2 0.13 0.1 0 1.5707 1.5707</pose>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name="right_front_wheel">
+      <pose>0.2 -0.13 0.1 0 1.5707 1.5707</pose>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name="left_back_wheel">
+      <pose>-0.2 0.13 0.1 0 1.5707 1.5707</pose>
+
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name="right_back_wheel">
+      <pose>-0.2 -0.13 0.1 0 1.5707 1.5707</pose>
+
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>.1</radius>
+            <length>.05</length>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint type="universal" name="left_front_wheel_hinge">
+     <pose>0 0 -0.03 0 0 0</pose>
+      <child>left_front_wheel</child>
+      <parent>chassis</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <joint type="universal" name="right_front_wheel_hinge">
+      <pose>0 0 0.03 0 0 0</pose>
+      <child>right_front_wheel</child>
+      <parent>chassis</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <joint type="revolute" name="left_back_wheel_hinge">
+     <pose>0 0 -0.03 0 0 0</pose>
+      <child>left_back_wheel</child>
+      <parent>chassis</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <joint type="revolute" name="right_back_wheel_hinge">
+      <pose>0 0 0.03 0 0 0</pose>
+      <child>right_back_wheel</child>
+      <parent>chassis</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+    <plugin name="mobicar_plugin" filename="../lib/libmobicar_plugin.so">
+      <namespace_model>ILU</namespace_model>
+      <velocity>0</velocity>
+    </plugin>
+  </model>
+</sdf>
