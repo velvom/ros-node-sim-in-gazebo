@@ -4,6 +4,7 @@
 #include <mutex>
 #include <deque>
 #include <condition_variable>
+#include <vector>
 
 // mrs - mobicarroscontroller
 namespace mrs {
