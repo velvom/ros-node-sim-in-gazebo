@@ -13,6 +13,37 @@ Directory/File Info:
 * src/include: source code for a ROS-aware Gazebo plugin to control the model simulation in Gazebo and for the main ROS node named `mobicar_ctrl_node`
 * mobicar.world: a custom .world file that attaches the plugin to nava_mobicar model and includes other surrounding elements such as light source, ground plane, stop sign, tree, etc.
 
+## Meeting Rubric Points
+* Loops, Functions, I/O  
+  line 74 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/stop_sign.cpp => `while` loop  
+  line 139 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_ros_controller.cpp => `for` loop  
+  line 101 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_ros_controller.cpp => Use of `function`  
+  line 117 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_plugin.cpp => Use of `function`  
+  line 59 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_plugin.cpp => I/O, reading the model elements from model.sdf   
+  https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/models/nava_mobicar/model.sdf => I/O, Gazebo model file
+* Object Oriented Programming  
+  line 27 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/include/mobicar_plugin.h => Inherit MobicarPlugin from ModelPlugin  
+  line 64, 70 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/include/vehicle.h => Data encapsulation with access specifier  
+  line 98, 111 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/vehicle.cpp => Classes encapsulate behavior  
+  line 7 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/vehicle.cpp => Use of list initialization in constructor 
+  line 17 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/include/mobicar_ros_controller.h => Inherit from std::enable_shared_from_this  
+  line 43 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/include/mobicar_ros_controller.h => Composite object of ros::NodeHandle  
+  line 17 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/include/stop_sign.h => Templated MessageQueue implementation
+* Memory Management  
+  line 13, 114 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_ros_controller.cpp => Use of `pass by reference`  
+  line 84 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_plugin.cpp => Use of `unique_ptr`  
+  line 17, 18 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_ros_controller.cpp => Use of `shared_ptr`  
+  line 33 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/stop_sign.cpp => Use of `move` semantics  
+  line 40 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/stop_sign.cpp => Use of `shared_ptr`  
+  line 12 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_ros_controller_main.cpp => Use of `RAII`
+* Concurrency  
+  line 16, 17 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/stop_sign.cpp => Use of `mutex`, `condvar`  
+  line 57, 63 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/stop_sign.cpp => Use of `lock_guard`  
+  line 85 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/stop_sign.cpp => Use of `future`/`async`  
+  line 69 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/stop_sign.cpp => Running processVehicles() in a separate thread, multithreading  
+  line 16 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_ros_controller_main.cpp => Use of multithreading  
+  line 162 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/mobicar_ros_controller.cpp => Use of message queue to schedule vehicles thru intersection
+
 ## Dependencies for Running Locally
 * cmake >= 2.8
   * Linux OS: [click here for installation instructions](https://cmake.org/install/)
