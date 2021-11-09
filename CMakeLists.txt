@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 
 # Set the C++ standard we will use
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Set the project name

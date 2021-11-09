@@ -5,6 +5,7 @@
 #include <gazebo/physics/physics.hh>
 #include <ignition/math/Rand.hh>
 #include <ros/console.h> // logger, view in rqt_console tool
+#include <memory>
 
 using namespace gazebo;
 
@@ -41,17 +42,12 @@ void MobicarPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   
   // Store the model and world pointers for convenience.
   this->model_ = _model;
-  this->world_ = this->model_->GetWorld();
+  //this->world_ = this->model_->GetWorld();
 
   // Model Name: "nava_mobicar"
   this->name_ = this->model_->GetName();
-  ROS_INFO_STREAM("The Mobicar plugin is attached to model[" <<
-                  this->name_ << "] in the world[" << this->world_->Name() << "]");
-
-  // Get the position of the model
-  this->lastPose_ = this->model_->WorldPose();
-  ignition::math::Vector3<double> position =  this->lastPose_.Pos();
-  double pos[3] = {position.X(), position.Y(), position.Z()};
+  //ROS_INFO_STREAM("The Mobicar plugin is attached to model[" <<
+  //                this->name_ << "] in the world[" << this->world_->Name() << "]");
 
   // This should happen before applying velocity below
   this->ApplyPIDControl();
@@ -95,9 +91,6 @@ void MobicarPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
         boost::bind(&MobicarPlugin::OnRosMsg, this, _1),
         ros::VoidPtr(), &this->rosCbQueue_);
   this->rosSub_ = this->rosNode_->subscribe(so);
-
-  // To track Gazebo's simulation update time
-  this->last_pose_publish_time_ = this->world_->SimTime();
 
   // Spin up the queue helper thread.
   this->rosCbQueueThread_ = std::thread(std::bind(&MobicarPlugin::ProcessRosMsgs, this));
@@ -156,16 +149,4 @@ void MobicarPlugin::ProcessRosMsgs()
   while (this->rosNode_->ok()) {
     this->rosCbQueue_.callAvailable(ros::WallDuration(timeout));
   }
-}
-
-/// \brief Called by the world update start event
-void MobicarPlugin::OnUpdate()
-{
-  common::Time current_time = this->world_->SimTime();
-  last_pose_publish_time_ = current_time;
-
-  // Get the position of the model
-  this->lastPose_ = this->model_->WorldPose();
-  ignition::math::Vector3<double> position = this->lastPose_.Pos();
-  double pos[3] = {position.X(), position.Y(), position.Z()};
 }
