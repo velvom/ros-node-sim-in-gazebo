@@ -4,6 +4,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Vector3.h>
+#include <mutex>
 
 // mrs - mobicarroscontroller
 namespace mrs {
