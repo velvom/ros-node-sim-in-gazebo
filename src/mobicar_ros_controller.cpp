@@ -8,6 +8,8 @@
 // mrs - mobicarroscontroller
 namespace mrs {
 
+const double range_from_intersection = 2.5;
+
 MobicarRosController::MobicarRosController(const ros::NodeHandle& nh)
     : nh_(nh),
       sub_callback_count_(0)
@@ -133,7 +135,6 @@ void MobicarRosController::modelstateCallback(const gazebo_msgs::ModelStates::Co
   double v{0.0};
   double brake_dist_to_stopsign = 14.0;
   const double brake_dist_to_deadend = 5.5;
-  const double range_fron_intersection = 2.5;
 
   for (const auto& p: vehicles_) {
     // Store vehicle position and linear velocity data
@@ -154,7 +155,7 @@ void MobicarRosController::modelstateCallback(const gazebo_msgs::ModelStates::Co
 
     // Range vehicle at intersection
     // Queue vehicles to be scheduled to take turn at stop sign
-    if (d <= range_fron_intersection &&
+    if (d <= range_from_intersection &&
         p->getVehicleState() == mrs::Vehicle::State::STATE_STOPPED &&
         p->getVehicleAtIntersection() == false) {
       p->setVehicleAtIntersection(true);
@@ -183,7 +184,7 @@ void MobicarRosController::scheduleVehicle(std::string vid)
       p->pubVelocity(16.0);
 
       // Wait until the vehicle leaves the intersection
-      while (p->calculateDistance() <= 2.5) {
+      while (p->calculateDistance() <= range_from_intersection) {
         ros::Duration(0.1).sleep(); // sleep for 100 ms
       }
 

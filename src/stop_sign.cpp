@@ -5,11 +5,10 @@
 #include <mobicar_ros_controller.h>
 #include <vehicle.h>
 
-/* Implementation of class "MessageQueue" */
-
 // mrs - mobicarroscontroller
 namespace mrs {
 
+// Implementation of class "MessageQueue"
 template <typename T>
 T MessageQueue<T>::receive()
 {
@@ -27,18 +26,15 @@ T MessageQueue<T>::receive()
 template <typename T>
 void MessageQueue<T>::send(T&& msg)
 {
-    // _condition.notify_one() to add a new message to the queue and afterwards send a notification.
-
     // perform deque modification under the lock
     std::lock_guard<std::mutex> lck(_mutex);
 
     // add message to deque
-    //std::cout << "Message " << msg << " has been sent to the queue" << std::endl;
     _queue.push_back(std::move(msg));
     _cond.notify_one(); // notify client after pushing new message into deque
 }
 
-/* Implementation of class "StopSign" */
+// Implementation of class "StopSign"
 StopSign::StopSign()
 {
     _ssvehiclesqueue = std::make_shared<MessageQueue<std::string>>();
@@ -70,8 +66,6 @@ bool StopSign::getCurrentPhase()
 
 void StopSign::init(std::shared_ptr<std::vector<std::thread>>& threads)
 {
-    // the private method "cycleThroughPhases" should be started in a thread
-    // when the public method "simulate" is called.
     threads->emplace_back(std::thread(&StopSign::processVehicles, this));
 }
 
@@ -79,12 +73,11 @@ void StopSign::processVehicles()
 {
     while (true)
     {
-        // sleep at every iteration to reduce CPU usage
+        // Sleep at every iteration to reduce CPU usage
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
         // Process the next vehicle in the queue if no vehicle is in the intersection
         if (!getCurrentPhase()) {
-            //std::cout << "processVehicles " << std::hex << ::std::this_thread::get_id() << std::endl;
             ROS_INFO_STREAM("StopSign::processVehicles() in thread: " << std::hex << ::std::this_thread::get_id());
             auto msg = _ssvehiclesqueue->receive();
 

@@ -1,6 +1,5 @@
 #include <vehicle.h>
 #include <std_msgs/Float32.h>
-//#include <stop_sign.h>
 
 // mrs - mobicarroscontroller
 namespace mrs {
@@ -41,17 +40,6 @@ void Vehicle::pubVelocity(const double& vel)
   // Send the message
   pub_.publish(msg);
 }
-
-// void Vehicle::stopVehicle() 
-// {
-//   double d = sqrt((pos_.x - 0.0) * (pos_.x - 0.0) + (pos_.y - 0.0) * (pos_.y - 0.0));
-//   if (getVehicleState() == mrs::Vehicle::State::STATE_INMOTION &&
-//       getVehicleDirection() == mrs::Vehicle::Direction::DIR_TOWARDS_STOPSIGN &&
-//       d < 14.5) {
-//     pubVelocity(0.0);
-//     setVehicleState(mrs::Vehicle::State::STATE_STOPPED);
-//   }
-// }
 
 // Store Vehicle's current position
 void Vehicle::storeVehiclePosition(const geometry_msgs::Point& pos)

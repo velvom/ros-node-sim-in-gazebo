@@ -8,9 +8,6 @@
 // mrs - mobicarroscontroller
 namespace mrs {
 
-// forward declarations to avoid include cycle
-//class StopSign;
-
 class Vehicle : public std::enable_shared_from_this<Vehicle>
 {
 public:

@@ -20,7 +20,6 @@
 #include <ros/advertise_options.h>
 #include <std_msgs/Float32.h>
 
-
 namespace gazebo
 {
   
@@ -30,6 +29,7 @@ class MobicarPlugin : public ModelPlugin
 public:
   /// \brief Constructor
   MobicarPlugin() {}
+
   /// \brief Destructor
   virtual ~MobicarPlugin();
 
@@ -39,8 +39,6 @@ public:
   /// attached to.
   /// \param[in] _sdf A pointer to the plugin's SDF element.
   virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
-
-  // static void MySigintHandler(int sig);
 
   /// \brief Set the target velocity to a wheel-joint
   /// \param[in] _vel New target velocity
@@ -61,20 +59,8 @@ public:
   void OnUpdate();
 
 private:
-
-  /// \brief Handle incoming message
-  /// \param[in] _msg Repurpose a vector3 message. This function will
-  /// only use the x component.
-  //void OnMsg(ConstVector3dPtr& _msg);
-
   /// \brief ROS helper function that processes incoming messages
   void ProcessRosMsgs();
-
-  /// \brief A node used for transport
-  //transport::NodePtr node_;
-
-  /// \brief A subscriber to a named topic.
-  //transport::SubscriberPtr sub_;
 
   /// \brief Pointer to the car model
   physics::ModelPtr model_;

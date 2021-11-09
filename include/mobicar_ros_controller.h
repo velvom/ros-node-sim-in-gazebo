@@ -10,8 +10,6 @@
 // mrs - mobicarroscontroller
 namespace mrs {
 
-//const double epsilon = 0.05;
-
 // forward declarations to avoid include cycle
 class StopSign;
 class Vehicle;
