@@ -176,7 +176,7 @@
       </axis>
     </joint>
 
-    <plugin name="mobicar_plugin" filename="../lib/libmobicar_plugin.so">
+    <plugin name="mobicar_plugin" filename="libmobicar_plugin.so">
       <namespace_model>ILU</namespace_model>
       <velocity>0</velocity>
     </plugin>
