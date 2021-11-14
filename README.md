@@ -25,7 +25,7 @@ Directory/File Info:
   line 27 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/include/mobicar_plugin.h => Inherit MobicarPlugin from ModelPlugin  
   line 64, 70 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/include/vehicle.h => Data encapsulation with access specifier  
   line 98, 111 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/src/vehicle.cpp => Classes encapsulate behavior  
-  line 7 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/src/vehicle.cpp => Use of list initialization in constructor 
+  line 7 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/src/vehicle.cpp => Use of list initialization in constructor  
   line 17 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/include/mobicar_ros_controller.h => Inherit from std::enable_shared_from_this  
   line 43 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/include/mobicar_ros_controller.h => Composite object of ros::NodeHandle  
   line 17 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/include/stop_sign.h => Templated MessageQueue implementation
@@ -44,7 +44,7 @@ Directory/File Info:
   line 16 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/src/mobicar_ros_controller_main.cpp => Use of multithreading  
   line 162 in https://github.com/velvom/ros-node-sim-in-gazebo/blob/main/src/ros_sim_gz/src/mobicar_ros_controller.cpp => Use of message queue to schedule vehicles thru intersection
 
-## Dependencies for Running Locally
+## Dependencies for Building/Running Locally
 * cmake >= 2.8
   * Linux OS: [click here for installation instructions](https://cmake.org/install/)
 * make >= 4.1 (Linux)
@@ -59,14 +59,15 @@ Directory/File Info:
   * For Notetic distribution: sudo apt-get install ros-noetic-ros-control ros-noetic-ros-controllers
 * Install colcon: [click here for installation instructions](https://colcon.readthedocs.io/en/released/user/installation.html)
 
-## Basic Build Instructions
-
-1. Clone this repo.
-2.`cd <top-level directory>`  
-3. Source ROS: `source /opt/ros/noetic/setup.bash`
+## Build/Run Instructions
+### Option I: Native Linux Host (eg. Ubuntu 20.04)
+#### Build
+1. Clone this repo.  
+2. `cd` \<top-level directory\>  
+3. Source ROS: `source /opt/ros/noetic/setup.bash`  
 4. Compile: `colcon build`
 
-## Running Instructions
+#### Run
 
 1. From a termial, source ROS and start roscore as follows.  
    $ `source /opt/ros/noetic/setup.bash`  
@@ -74,11 +75,22 @@ Directory/File Info:
 
 2. Open another terminal and execute the following from the top-level directory to launch Gazebo world with mobicar model.  
    $ `source /usr/share/gazebo-11/setup.sh`  
-   $ `export GAZEBO_MODEL_PATH=<top-level directory>/models:${GAZEBO_MODEL_PATH}`  
+   $ `export GAZEBO_MODEL_PATH=<top-level directory>/src/ros_sim_gz/models:${GAZEBO_MODEL_PATH}`  
    $ `source install/setup.bash`  
    $ `rosrun gazebo_ros gazebo --verbose src/ros_sim_gz/mobicar.world`
 
-3. Now, from the terminal you compiled the code, execute the main ros node to start the simulation. 
-   $ `cd <top-level directory>`  
+3. Now, from the terminal you compiled the code, execute the main ros node to start the simulation.  
+   $ `cd` \<top-level directory\>  
    $ `source install/setup.bash`  
    $ `rosrun ros_sim_gz rosvel`
+   
+ 
+### Option II: Containerization 
+#### Build/Run
+1. Clone this repo.  
+2. `cd` \<top-level directory\>  
+3. Build a docker image from Dockerfile having ros:melodic as base image: `./ build_docker_image.bash`   
+4. Start the image: `./start_docker_image.bash`  
+5. From a separate terminal, download the `VNC Viewer` application from RealVNC Web site and install it.  
+6. Open `VNC Viewer` and enter the `VNC server` address (eg. localhost:5900) to view the Gazebo simulation and other GUI windows.  
+**Note**: Refer to the `./start_docker_image.bash` script to find out port exposed to the host from container.
